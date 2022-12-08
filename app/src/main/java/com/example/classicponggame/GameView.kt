@@ -86,9 +86,6 @@ class GameView(context: Context): SurfaceView(context), SurfaceHolder.Callback, 
         ball1.paint.color = Color.RED
     }
 
-
-
-
     override fun surfaceCreated(holder: SurfaceHolder) {
     }
 
