@@ -15,7 +15,7 @@ class GameView(context: Context): SurfaceView(context), SurfaceHolder.Callback, 
     private var running = false
     lateinit var canvas : Canvas
     private lateinit var ball1 : Ball
-    private lateinit var ball2 : Ball
+    private lateinit var  : Ball
     private var bounds = Rect()
     var mHolder: SurfaceHolder? = holder
 
@@ -24,7 +24,6 @@ class GameView(context: Context): SurfaceView(context), SurfaceHolder.Callback, 
             mHolder?.addCallback(this)
         }
         setup()
-
     }
 
     fun setup() {
@@ -36,12 +35,10 @@ class GameView(context: Context): SurfaceView(context), SurfaceHolder.Callback, 
 
     }
 
-
     fun start(){
         running = true
         thread = Thread(this)
         thread?.start()
-
 
     }
 
@@ -53,7 +50,6 @@ class GameView(context: Context): SurfaceView(context), SurfaceHolder.Callback, 
         }catch (e: InterruptedException) {
             e.printStackTrace()
         }
-
 
     }
 
@@ -72,7 +68,8 @@ class GameView(context: Context): SurfaceView(context), SurfaceHolder.Callback, 
     }
 
     fun intersects(b1: Ball, b2:Ball)
-    {if (Math.sqrt(Math.pow(b1.posX-b2.posX.toDouble(),2.0)+Math.pow(b1.posY-b2.posY.toDouble(), 2.0))<=b1.size+b2.size) {
+    {if (Math.sqrt(Math.pow(b1.posX-b2.posX.toDouble(),2.0)
+                +Math.pow(b1.posY-b2.posY.toDouble(), 2.0)) <=b1.size+b2.size) {
 
         bounceBall(b1,b2)
 
@@ -115,8 +112,6 @@ class GameView(context: Context): SurfaceView(context), SurfaceHolder.Callback, 
             ball2.checkBounds(bounds)
             intersects(ball1,ball2)
         }
-
-
 
 
     }
