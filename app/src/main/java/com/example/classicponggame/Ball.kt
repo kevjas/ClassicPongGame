@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class Ball(var posX: Float, var posY: Float, var size: Float, var speedX: Float, var speedY: Float) {
+//he
 
     val paint = Paint()
 

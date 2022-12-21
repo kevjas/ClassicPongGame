@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 
 class GameActivity : AppCompatActivity() {
+//he
 
 
     val mode = arrayOf("One Player","Two Players")

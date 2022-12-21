@@ -17,6 +17,7 @@ class InGameActivity : AppCompatActivity() {
         val size = Point()
         display.getSize(size)
 
+//he
 
         // Initialize pongView and set it as the view
         pongView = GameView(this, size.x, size.y)

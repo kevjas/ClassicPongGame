@@ -88,6 +88,7 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     {if (Math.sqrt(Math.pow(b1.posX-b2.playerX.toDouble(),2.0)+Math.pow(b1.posY-b2.playerY.toDouble(), 2.0))<=b1.size+b2.playerWidth) {
 
         bounceBall(b1,b2)
+//he
 
     }
 
