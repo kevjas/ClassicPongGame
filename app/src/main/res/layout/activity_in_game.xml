@@ -15,23 +15,24 @@
        </SurfaceView>
 
 
+
     <TextView
         android:id="@+id/tv_ScorePlayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
         android:layout_marginStart="88dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="150dp"
         android:layout_marginBottom="360dp"
         android:text="Player"
-        android:textStyle="bold"
         android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_ScoreOpponent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tv_ScoreOpponent"
@@ -42,13 +43,14 @@
         android:layout_marginEnd="88dp"
         android:layout_marginBottom="360dp"
         android:text="Opponent"
-        android:textStyle="bold"
-        android:textSize="25sp"
         android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_ScorePlayer"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.068" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

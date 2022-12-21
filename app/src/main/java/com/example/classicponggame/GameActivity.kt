@@ -12,7 +12,6 @@ import android.widget.Spinner
 class GameActivity : AppCompatActivity() {
 //he
 
-
     val mode = arrayOf("One Player","Two Players")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +34,6 @@ class GameActivity : AppCompatActivity() {
 
         }
     }
-
 
     fun Play(view: View?){
         val intent= Intent(this,InGameActivity::class.java)
