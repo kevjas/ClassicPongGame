@@ -1,43 +1,44 @@
 package com.example.classicponggame
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
-import android.view.MotionEvent
+import android.graphics.*
 import android.view.View
 
-class paddeln9(context: Context,) : View(context) {
+class player1(context: Context,) : View(context) {
 //he
     var speedX = 0f
     var speedY = 0f
+
+
 
     // Create a new Paint object for drawing the player
     val paint = Paint()
 
     // Variables for the player position and size
-   var playerX = 50f
-    var playerY = 50f
-     var playerWidth = 500f
-    var playerHeight = 30f
+     var playerX = 0f
+     var playerY = 0f
+     val playerWidth = 300f
+     val playerHeight = 70f
 
+     val playerHitbox = RectF()
     fun update(){
-
-
+        playerX += speedX
     }
+
     fun Draw(canvas: Canvas) {
 
-        // Set the paint color to your desired color
-        paint.color = Color.RED
+        // Update player hitbox
+        playerHitbox.left = playerX
+        playerHitbox.top = playerY
+        playerHitbox.right = playerX + playerWidth
+        playerHitbox.bottom = playerY + playerHeight
 
         // Set the size of the player using the paint's stroke width
-        paint.strokeWidth = 100f
 
 
         // Draw the player as a horizontal line on the canvas using the drawLine method
-        canvas.drawLine(playerX.toFloat(), playerY.toFloat(), (playerX + playerWidth).toFloat(), playerY.toFloat(), paint)
+        paint.color = Color.BLUE
+        canvas.drawRect(playerX, playerY, playerX + playerWidth, playerY + playerHeight, paint)
     }
 
     fun checkBounds(bounds : Rect){

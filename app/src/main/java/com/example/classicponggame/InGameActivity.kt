@@ -3,6 +3,7 @@ package com.example.classicponggame
 import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.WindowManager
 
 class InGameActivity : AppCompatActivity() {
@@ -17,7 +18,13 @@ class InGameActivity : AppCompatActivity() {
         val size = Point()
         display.getSize(size)
 
+        val screenWidth = size.x
+        val screenHeight = size.y
+
+
 //he
+
+
 
         // Initialize pongView and set it as the view
         pongView = GameView(this, size.x, size.y)

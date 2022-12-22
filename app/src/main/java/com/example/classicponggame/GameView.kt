@@ -16,7 +16,9 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     private var running = false
     lateinit var canvas : Canvas
     private lateinit var ball1 : Ball
-    private lateinit var ball2 : paddeln9
+    private lateinit var ball2 : player1
+    private lateinit var PlayerBot : playerbot
+
 
     var mFPS: Long = 0
 
@@ -36,9 +38,11 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     }
 
     fun setup() {
-        ball1 = Ball(1350f, 725f, 50f, 12f, 12f)
-        ball2 = paddeln9(context)
+        ball1 = Ball(context)
+        ball2 = player1(context)
+        PlayerBot = playerbot(context)
         ball1.paint.color = Color.BLACK
+
 
     }
 
@@ -66,7 +70,10 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     fun update(){
         ball1.update()
         ball2.update()
-         }
+        PlayerBot.updateAIPlayer()
+        PlayerBot.startGame()
+
+    }
 
     fun draw(){
 
@@ -74,6 +81,7 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         canvas.drawColor(Color.WHITE)
         ball1.draw(canvas)
         ball2.Draw(canvas)
+        PlayerBot.Draw(canvas)
 
 
 
@@ -84,19 +92,20 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         mHolder!!.unlockCanvasAndPost(canvas)
     }
 
-    fun intersects(b1: Ball, b2: paddeln9)
-    {if (Math.sqrt(Math.pow(b1.posX-b2.playerX.toDouble(),2.0)+Math.pow(b1.posY-b2.playerY.toDouble(), 2.0))<=b1.size+b2.playerWidth) {
+    fun intersects(b1: Ball, b2: player1, b3:playerbot)
+    {if (b1.ballHitbox.intersects(b2.playerHitbox.left, b2.playerHitbox.top, b2.playerHitbox.right, b2.playerHitbox.bottom ))
+        bounceBall(b1,b2, b3)
 
-        bounceBall(b1,b2)
-//he
+        else if (b1.ballHitbox.intersects(b3.playerHitbox.left, b3.playerHitbox.top, b3.playerHitbox.right, b3.playerHitbox.bottom )) {
 
+        bounceBall(b1,b2, b3)}
     }
 
-    }
 
-    fun bounceBall(b1: Ball, b2: paddeln9) {
+    fun bounceBall(b1: Ball, b2: player1, b3:playerbot ) {
         b1.speedY*= -1
         b2.speedY*= -1
+        b3.speedY*= -1
         ball1.paint.color = Color.RED
     }
 
@@ -105,12 +114,10 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
 
         // Get the touch coordinates
         val touchX = event!!.x.toInt()
-        val touchY = event!!.y.toInt()
 
 
         // Update the player position based on the touch coordinates
         ball2.playerX = touchX - ball2.playerWidth / 2
-        ball2.playerY = touchY - ball2.playerHeight / 2
 
 
         // Redraw the view
@@ -142,10 +149,13 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
             update()
             draw()
 
+
             ball1.checkBounds(bounds)
             ball2.checkBounds(bounds)
-            intersects(ball1,ball2)
+            PlayerBot.checkBounds(bounds)
+            intersects(ball1,ball2,PlayerBot)
 
+            invalidate()
 
 
             // Capture the current time in milliseconds in startFrameTime
@@ -156,8 +166,7 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
             val timeThisFrame = System.currentTimeMillis() - startFrameTime
             if (timeThisFrame >= 1) {
                 mFPS = 1000 / timeThisFrame
-        }
-
+            }
 
 
 

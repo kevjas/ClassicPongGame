@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ClassicPongGame</string>
+
+    <declare-styleable name="PongTable">
+        <attr name="racketHeight" format="integer" />
+        <attr name="racketWidth" format="integer" />
+        <attr name="ballRadius" format="integer" />
+    </declare-styleable>
 </resources>
