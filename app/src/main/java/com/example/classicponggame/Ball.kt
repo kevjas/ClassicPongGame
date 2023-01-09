@@ -9,8 +9,14 @@ class Ball(context: Context,) : View(context) {
     var ballX = 725f
      var ballY = 1350f
      val ballRadius = 50f
-    var speedX = 7f
-    var speedY = 7f
+    var speedX = -16f
+    var speedY = -16f
+
+    private var playerScore = 0
+    private var aiScore = 0
+    private var playerHighScore = 0
+
+
 
     val displayMetrics = resources.displayMetrics
     val screenWidth = displayMetrics.widthPixels
@@ -28,12 +34,22 @@ class Ball(context: Context,) : View(context) {
 
         // Check if ball has collided with left or right wall
         if (ballX - ballRadius < 0 || ballX + ballRadius > screenWidth) {
-            ballX = -ballX
+            speedX = -speedX
         }
 
         // Check if ball has collided with top or bottom wall
         if (ballY - ballRadius < 0 || ballY + ballRadius > screenHeight) {
-            ballY = -ballY
+            speedY = -speedY
+        }
+
+    }
+
+    fun checkBounds(bounds : Rect){
+        if (ballX-75 < bounds.left){
+            this.speedX *=-1
+        }
+        if (ballX+75 > bounds.right){
+            this.speedX*= -1
         }
 
     }
@@ -49,20 +65,46 @@ class Ball(context: Context,) : View(context) {
 
         // Draw ball
         paint.color = Color.RED
-        canvas.drawCircle(ballX, ballY, ballRadius, paint)    }
+        canvas.drawCircle(ballX, ballY, ballRadius, paint)
 
-    fun checkBounds(bounds : Rect){
-        if (ballX-75 < bounds.left){
-            this.speedX *=-1
-        }
-        if (ballX+75 > bounds.right){
-            this.speedX*= -1
-        }
-        if (ballY-75 < bounds.top){
-            this.speedY *= -1
-        }
-        if (ballY+75 > bounds.bottom){
-            this.speedY *= -1
-        }
+
+        // Draw scores and high score
+        paint.color = Color.BLACK
+        paint.textSize = 66f
+        val playerScoreText = "Player score: $playerScore"
+        val aiScoreText = "AI score: $aiScore"
+        val playerHighScoreText = "High score: $playerHighScore"
+        canvas.drawText(playerScoreText, 50f, 50f, paint)
+        canvas.drawText(aiScoreText, 50f, 100f, paint)
+        canvas.drawText(playerHighScoreText, 50f, 150f, paint)
     }
+
+
+
+
+    fun updateScore() {
+        if (ballY - ballRadius < 0) {
+            // Ball passed through player's side of the screen
+            aiScore++
+            ballX = (screenWidth / 2).toFloat()
+            ballY = (screenHeight / 2).toFloat()
+            speedX = -speedX
+
+        } else if (ballY + ballRadius > screenHeight) {
+            // Ball passed through AI's side of the screen
+            playerScore++
+            ballX = (screenWidth / 2).toFloat()
+            ballY = (screenHeight / 2).toFloat()
+            speedX = -speedX
+            if (playerScore > playerHighScore) {
+                playerHighScore = playerScore
+            }
+        }
+
+
+        }
+
+
+
 }
+

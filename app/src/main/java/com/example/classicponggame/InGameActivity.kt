@@ -14,12 +14,16 @@ class InGameActivity : AppCompatActivity() {
 
         val display = windowManager.defaultDisplay
 
+
+        val displayMetrics = resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels
+        val screenHeight = displayMetrics.heightPixels
+
         // Load the resolution into a Point object
         val size = Point()
         display.getSize(size)
 
-        val screenWidth = size.x
-        val screenHeight = size.y
+
 
 
 //he
@@ -27,7 +31,7 @@ class InGameActivity : AppCompatActivity() {
 
 
         // Initialize pongView and set it as the view
-        pongView = GameView(this, size.x, size.y)
+        pongView = GameView(this, screenWidth, screenHeight)
         setContentView(pongView)
 
 

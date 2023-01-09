@@ -20,9 +20,8 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     private lateinit var PlayerBot : playerbot
 
 
+
     var mFPS: Long = 0
-
-
 
 
 
@@ -69,6 +68,7 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
 
     fun update(){
         ball1.update()
+        ball1.updateScore()
         ball2.update()
         PlayerBot.updateAIPlayer()
         PlayerBot.startGame()
@@ -82,8 +82,6 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         ball1.draw(canvas)
         ball2.Draw(canvas)
         PlayerBot.Draw(canvas)
-
-
 
 
         val paint = Paint()
@@ -149,8 +147,6 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
             update()
             draw()
 
-
-            ball1.checkBounds(bounds)
             ball2.checkBounds(bounds)
             PlayerBot.checkBounds(bounds)
             intersects(ball1,ball2,PlayerBot)
@@ -168,8 +164,8 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
                 mFPS = 1000 / timeThisFrame
             }
 
-
-
     }
+
+
 }
 }

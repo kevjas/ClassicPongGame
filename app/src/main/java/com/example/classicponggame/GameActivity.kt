@@ -13,9 +13,12 @@ class GameActivity : AppCompatActivity() {
 
 
     val mode = arrayOf("One Player","Two Players")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
+
 
         //hide bar
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN )
@@ -42,5 +45,7 @@ class GameActivity : AppCompatActivity() {
 
 
     }
+
+
 }
 
