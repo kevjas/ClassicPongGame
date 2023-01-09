@@ -3,14 +3,21 @@ package com.example.classicponggame
 import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.WindowManager
 
 class InGameActivity : AppCompatActivity() {
     private lateinit var pongView: GameView
 
+    companion object {
+        const val EXTRA_GAME_MODE = "game_mode"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val gameMode = intent.getSerializableExtra(EXTRA_GAME_MODE) as GameActivity.GameMode
+        val mainActivity = GameActivity()
+        mainActivity.gameMode = gameMode
 
         val display = windowManager.defaultDisplay
 
@@ -25,13 +32,12 @@ class InGameActivity : AppCompatActivity() {
 
 
 
-
 //he
 
 
 
         // Initialize pongView and set it as the view
-        pongView = GameView(this, screenWidth, screenHeight)
+        pongView = GameView(this, screenWidth, screenHeight,)
         setContentView(pongView)
 
 

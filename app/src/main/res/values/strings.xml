@@ -6,4 +6,10 @@
         <attr name="racketWidth" format="integer" />
         <attr name="ballRadius" format="integer" />
     </declare-styleable>
+
+    <string-array name="game_modes">
+        <item>1 Player</item>
+        <item>2 Players</item>
+    </string-array>
+
 </resources>

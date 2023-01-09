@@ -17,7 +17,10 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     lateinit var canvas : Canvas
     private lateinit var ball1 : Ball
     private lateinit var ball2 : player1
+    private lateinit var GameActivity : GameActivity
+
     private lateinit var PlayerBot : playerbot
+
 
 
 
@@ -72,6 +75,7 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         ball2.update()
         PlayerBot.updateAIPlayer()
         PlayerBot.startGame()
+
 
     }
 

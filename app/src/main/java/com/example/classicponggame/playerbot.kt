@@ -59,7 +59,7 @@ class playerbot(context: Context,) : View(context) {
 
 
         // Draw the player as a horizontal line on the canvas using the drawLine method
-        paint.color = Color.BLUE
+        paint.color = Color.RED
         canvas.drawRect(playerBotX, playerBotY, playerBotX + playerBotWidth, playerBotY + playerBotHeight, paint)
     }
 

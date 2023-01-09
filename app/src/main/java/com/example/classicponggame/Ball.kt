@@ -1,6 +1,7 @@
 package com.example.classicponggame
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.*
 import android.view.View
 
@@ -9,12 +10,15 @@ class Ball(context: Context,) : View(context) {
     var ballX = 725f
      var ballY = 1350f
      val ballRadius = 50f
-    var speedX = -16f
-    var speedY = -16f
+    var speedX = 13f
+    var speedY = 13f
 
     private var playerScore = 0
     private var aiScore = 0
     private var playerHighScore = 0
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private val PREFS_FILE = "com.example.pingpong.prefs"
 
 
 
@@ -31,6 +35,9 @@ class Ball(context: Context,) : View(context) {
     fun update(){
         ballX += speedX
         ballY += speedY
+
+        sharedPreferences = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
+        playerHighScore = sharedPreferences.getInt("highScore", 0)
 
         // Check if ball has collided with left or right wall
         if (ballX - ballRadius < 0 || ballX + ballRadius > screenWidth) {
@@ -98,6 +105,7 @@ class Ball(context: Context,) : View(context) {
             speedX = -speedX
             if (playerScore > playerHighScore) {
                 playerHighScore = playerScore
+                sharedPreferences.edit().putInt("highScore", playerHighScore).apply()
             }
         }
 
