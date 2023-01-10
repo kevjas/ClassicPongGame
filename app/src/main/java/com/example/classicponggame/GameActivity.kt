@@ -20,7 +20,7 @@ class GameActivity : AppCompatActivity() {
     var gameMode = GameMode.SINGLE_PLAYER
 
     private lateinit var ball1 : Ball
-    private lateinit var ball2 : player1
+    private lateinit var player1 : player1
     private lateinit var PlayerBot : playerbot
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,52 +41,25 @@ class GameActivity : AppCompatActivity() {
         val adapter = ArrayAdapter.createFromResource(this, R.array.game_modes, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val gameMode = when (position) {
-                    0 -> GameMode.SINGLE_PLAYER
-                    1 -> GameMode.MULTI_PLAYER
-                    else -> throw IllegalArgumentException("Invalid game mode")
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        }
 
         // Set up play button
         val playButton = findViewById<Button>(R.id.Button)
         playButton.setOnClickListener {
+
+            val selectedGameMode = spinner.selectedItem.toString()
+            if (selectedGameMode == "Player 1") {
+                startInGameActivity(GameMode.SINGLE_PLAYER)
+            } else if (selectedGameMode == "Player 2") {
+                startInGameActivity(GameMode.MULTI_PLAYER)
+            }
+        }
+
             // Start InGameActivity
-            val intent = Intent(this@GameActivity, InGameActivity::class.java)
-            intent.putExtra(InGameActivity.EXTRA_GAME_MODE, gameMode)
-            startActivity(intent)
-        }
-
-
-
     }
-
-    fun updateGame() {
-        when (gameMode) {
-            GameMode.SINGLE_PLAYER -> {
-                // Update single player game
-                ball1.update()
-                ball1.updateScore()
-                ball2.update()
-                PlayerBot.updateAIPlayer()
-                PlayerBot.startGame()
-            }
-            GameMode.MULTI_PLAYER -> {
-                // Update multi player game
-                ball1.update()
-                ball1.updateScore()
-                ball2.update()
-                PlayerBot.updateAIPlayer()
-                PlayerBot.startGame()
-            }
-        }
+    private fun startInGameActivity(gameMode: GameMode) {
+        val intent = Intent(this, InGameActivity::class.java)
+        intent.putExtra(InGameActivity.EXTRA_GAME_MODE, gameMode)
+        startActivity(intent)
     }
 }
 

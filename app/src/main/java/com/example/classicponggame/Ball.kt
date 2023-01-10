@@ -10,8 +10,8 @@ class Ball(context: Context,) : View(context) {
     var ballX = 725f
      var ballY = 1350f
      val ballRadius = 50f
-    var speedX = 13f
-    var speedY = 13f
+    var speedX = 20f
+    var speedY = 20f
 
     private var playerScore = 0
     private var aiScore = 0
@@ -84,6 +84,29 @@ class Ball(context: Context,) : View(context) {
         canvas.drawText(playerScoreText, 50f, 50f, paint)
         canvas.drawText(aiScoreText, 50f, 100f, paint)
         canvas.drawText(playerHighScoreText, 50f, 150f, paint)
+    }
+
+     fun drawP2(canvas: Canvas?){
+        super.draw(canvas)
+        canvas ?: return
+        // Update ball hitbox
+        ballHitbox.left = ballX - ballRadius
+        ballHitbox.top = ballY - ballRadius
+        ballHitbox.right = ballX + ballRadius
+        ballHitbox.bottom = ballY + ballRadius
+
+        // Draw ball
+        paint.color = Color.RED
+        canvas.drawCircle(ballX, ballY, ballRadius, paint)
+
+
+        // Draw scores and high score
+        paint.color = Color.BLACK
+        paint.textSize = 66f
+        val playerScoreText = "Player score: $playerScore"
+        val aiScoreText = "Player2 score: $aiScore"
+         canvas.drawText(playerScoreText, 30f, 150f, paint)
+         canvas.drawText(aiScoreText, 30f, 2600f, paint)
     }
 
 

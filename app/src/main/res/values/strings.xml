@@ -8,8 +8,8 @@
     </declare-styleable>
 
     <string-array name="game_modes">
-        <item>1 Player</item>
-        <item>2 Players</item>
+        <item>Player 1</item>
+        <item>Player 2</item>
     </string-array>
 
 </resources>

@@ -9,20 +9,25 @@ import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 
-class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceView(context),  SurfaceHolder.Callback, Runnable {
+class GameView2(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceView(context),  SurfaceHolder.Callback, Runnable {
 
     private var thread : Thread? = null
     private var running = false
     lateinit var canvas : Canvas
     private lateinit var ball1 : Ball
     private lateinit var player1 : player1
+    private lateinit var player2 : player2
+
 
     private lateinit var GameActivity : GameActivity
 
     private lateinit var PlayerBot : playerbot
 
     var mFPS: Long = 0
+
 
 
     private var bounds = Rect()
@@ -39,7 +44,7 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     fun setup() {
         ball1 = Ball(context)
         player1 = player1(context)
-        PlayerBot = playerbot(context)
+        player2 = player2(context)
         ball1.paint.color = Color.BLACK
 
 
@@ -70,8 +75,8 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         ball1.update()
         ball1.updateScore()
         player1.update()
-        PlayerBot.updateAIPlayer()
-        PlayerBot.startGame()
+        player2.updateP2()
+        player2.startGameP2()
 
 
     }
@@ -82,9 +87,9 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
 
         canvas?.let {
             canvas.drawColor(Color.WHITE)
-            ball1.draw(canvas)
+            ball1.drawP2(canvas)
             player1.Draw(canvas)
-            PlayerBot.Draw(canvas)
+            player2.DrawPlayer2(canvas)
 
 
             val paint = Paint()
@@ -95,22 +100,23 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         }
     }
 
-    fun intersects(b1: Ball, b2: player1, b3:playerbot) {
+    fun intersects(b1: Ball, b2: player1, b4:player2) {
         if (b1.ballHitbox.intersects(b2.playerHitbox.left, b2.playerHitbox.top, b2.playerHitbox.right, b2.playerHitbox.bottom )){
-            bounceBall(b1,b2, b3)}
+            bounceBall(b1,b2, b4)}
 
-        else if (b1.ballHitbox.intersects(b3.playerHitbox.left, b3.playerHitbox.top, b3.playerHitbox.right, b3.playerHitbox.bottom )) {
 
-            bounceBall(b1,b2, b3)}
+            else if (b1.ballHitbox.intersects(b4.playerHitbox.left, b4.playerHitbox.top, b4.playerHitbox.right, b4.playerHitbox.bottom )) {
+            bounceBall(b1,b2,b4)}
+
 
         }
 
 
 
-    fun bounceBall(b1: Ball, b2: player1, b3:playerbot ) {
+    fun bounceBall(b1: Ball, b2: player1, b4: player2 ) {
         b1.speedY*= -1
         b2.speedY*= -1
-        b3.speedY*= -1
+        b4.speedY*= -1
 
         ball1.paint.color = Color.RED
     }
@@ -118,12 +124,27 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
+        when (event?.actionMasked) {
+            MotionEvent.ACTION_MOVE -> {
+                // get the x and y coordinates of the touch event
+                val touchX = event!!.x.toInt()
+
+
+
+                // update the position of the paddle based on the touch event
+                player1.playerX = touchX - player1.playerWidth / 2
+                // Update the player position based on the touch coordinates
+                player2.playerX = touchX - player2.playerWidth / 2
+
+            }
+
+
+
+        }
         // Get the touch coordinates
-        val touchX = event!!.x.toInt()
 
 
-        // Update the player position based on the touch coordinates
-        player1.playerX = touchX - player1.playerWidth / 2
+
 
 
         // Redraw the view
@@ -157,9 +178,9 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
             draw()
 
 
+            player2.checkBounds(bounds)
             player1.checkBounds(bounds)
-            PlayerBot.checkBounds(bounds)
-            intersects(ball1,player1,PlayerBot)
+            intersects(ball1,player1, player2)
 
             invalidate()
 
