@@ -62,12 +62,12 @@ class Ball(context: Context,) : View(context) {
         ballHitbox.bottom = ballY + ballRadius
 
         // Draw ball
-        paint.color = Color.GREEN
+        paint.color = Color.WHITE
         canvas.drawCircle(ballX, ballY, ballRadius, paint)
 
 
         // Draw scores and high score
-        paint.color = Color.BLACK
+        paint.color = Color.WHITE
         paint.textSize = 66f
         val playerScoreText = "Player Score: $playerScore"
         val aiScoreText = "AI Score: $aiScore"
@@ -89,12 +89,12 @@ class Ball(context: Context,) : View(context) {
         ballHitbox.bottom = ballY + ballRadius
 
         // Draw ball
-        paint.color = Color.RED
+        paint.color = Color.WHITE
         canvas.drawCircle(ballX, ballY, ballRadius, paint)
 
 
         // Draw scores and high score
-        paint.color = Color.BLACK
+        paint.color = Color.WHITE
         paint.textSize = 66f
         val playerScoreText = "Player score: $playerScore"
         val aiScoreText = "Player2 score: $aiScore"

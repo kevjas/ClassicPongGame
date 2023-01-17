@@ -2,9 +2,7 @@ package com.example.classicponggame
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.SurfaceHolder
@@ -38,7 +36,7 @@ class GameView(context: Context): SurfaceView(context),  SurfaceHolder.Callback,
         Game.ball1 = ball1
         player1 = player1(context)
         PlayerBot = playerbot(context)
-        ball1.paint.color = Color.BLACK
+        ball1.paint.color = Color.WHITE
     }
 
 
@@ -71,7 +69,7 @@ class GameView(context: Context): SurfaceView(context),  SurfaceHolder.Callback,
         val canvas = mHolder?.lockCanvas()
 
         canvas?.let {
-            canvas.drawColor(Color.WHITE)
+            canvas.drawColor(Color.BLACK)
             ball1.draw(canvas)
             player1.Draw(canvas)
             PlayerBot.Draw(canvas)
@@ -95,7 +93,7 @@ class GameView(context: Context): SurfaceView(context),  SurfaceHolder.Callback,
         b2.speedY*= -1
         b3.speedY*= -1
 
-        ball1.paint.color = Color.RED
+        ball1.paint.color = Color.WHITE
     }
 
     @SuppressLint("ClickableViewAccessibility")

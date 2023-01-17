@@ -44,7 +44,7 @@ class player2(context: Context,) : View(context) {
         playerHitbox.bottom = playerY + playerHeight
 
         // Draw the player
-        paint.color = Color.GREEN
+        paint.color = Color.RED
         canvas.drawRect(playerX, playerY, playerX + playerWidth, playerY + playerHeight, paint)
     }
 

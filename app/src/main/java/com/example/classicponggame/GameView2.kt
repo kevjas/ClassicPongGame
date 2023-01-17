@@ -2,15 +2,11 @@ package com.example.classicponggame
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 
 class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback, Runnable {
 
@@ -70,7 +66,7 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
         val canvas = mHolder?.lockCanvas()
 
         canvas?.let {
-            canvas.drawColor(Color.WHITE)
+            canvas.drawColor(Color.BLACK)
             ball1.drawP2(canvas)
             player1.Draw(canvas)
             player2.DrawPlayer2(canvas)
@@ -93,7 +89,7 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
         b2.speedY*= -1
         b4.speedY*= -1
 
-        ball1.paint.color = Color.RED
+        ball1.paint.color = Color.WHITE
     }
 
     @SuppressLint("ClickableViewAccessibility")

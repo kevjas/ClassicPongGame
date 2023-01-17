@@ -3,7 +3,7 @@
 
     <string-array name="game_modes">
         <item>Single Player</item>
-        <item>Two players</item>
+        <item>Two Players</item>
     </string-array>
 
 </resources>
