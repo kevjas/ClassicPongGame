@@ -6,46 +6,49 @@ import android.view.View
 import kotlin.math.max
 import kotlin.math.min
 
+class Game {
+    companion object {
+        lateinit var ball1: Ball
+    }
+}
 
 class playerbot(context: Context,) : View(context) {
-    //he
-    var speedX = 0f
-    var speedY = 0f
-     var AI_SPEED = 0.05f
-    var ballX = 1350f
-
 
     val displayMetrics = resources.displayMetrics
-    val screenWidth = displayMetrics.widthPixels
     val screenHeight = displayMetrics.heightPixels
 
+    var speedX = 0f
+    var speedY = 0f
+     var AI_SPEED = 0.09f
 
 
     // Create a new Paint object for drawing the player
     val paint = Paint()
 
+
     // Variables for the player position and size
-    var playerBotX = 500f
+    var playerBotX = 100f
     var playerBotY = -300f
     val playerBotWidth = 300f
     val playerBotHeight = 70f
     val playerHitbox = RectF()
 
 
-    fun startGame() {
-        playerBotY = screenHeight - playerBotHeight // Position player at bottom of screen
+    // Position player at bottom of screen
+    fun PlayerBotPosition() {
+        playerBotY = screenHeight - playerBotHeight
     }
 
 
+    //AI following the ball
         fun updateAIPlayer() {
-            val deltaX = ballX - playerBotX - playerBotWidth / 2
-            playerBotX += deltaX * AI_SPEED
+        playerBotY = screenHeight - playerBotHeight
 
-            if (playerBotX < 0 || playerBotX + playerBotWidth > screenWidth) {
-                // Reverse player's direction
-                AI_SPEED = -AI_SPEED
-            }
+        //Calculate the difference in position between the ball and the AI player's paddle
+        val deltaX = Game.ball1.ballX - playerBotX - playerBotWidth / 2
+        playerBotX += deltaX * AI_SPEED
         }
+
 
     fun Draw(canvas: Canvas) {
 
@@ -55,10 +58,7 @@ class playerbot(context: Context,) : View(context) {
         playerHitbox.right = playerBotX + playerBotWidth
         playerHitbox.bottom = playerBotY + playerBotHeight
 
-        // Set the size of the player using the paint's stroke width
-
-
-        // Draw the player as a horizontal line on the canvas using the drawLine method
+        // Draw the player
         paint.color = Color.RED
         canvas.drawRect(playerBotX, playerBotY, playerBotX + playerBotWidth, playerBotY + playerBotHeight, paint)
     }
@@ -77,8 +77,5 @@ class playerbot(context: Context,) : View(context) {
             this.speedY *= -1
         }
     }
-
-
-
 
 }

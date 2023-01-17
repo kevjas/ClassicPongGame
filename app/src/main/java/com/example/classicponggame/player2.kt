@@ -5,17 +5,17 @@ import android.graphics.*
 import android.view.View
 
 class player2(context: Context,) : View(context) {
-//he
+
+    val displayMetrics = resources.displayMetrics
+    val screenHeight = displayMetrics.heightPixels
+
     var speedX = 0f
     var speedY = 0f
 
 
-    val displayMetrics = resources.displayMetrics
-    val screenWidth = displayMetrics.widthPixels
-    val screenHeight = displayMetrics.heightPixels
-
     // Create a new Paint object for drawing the player
     val paint = Paint()
+
 
     // Variables for the player position and size
      var playerX = 0f
@@ -29,8 +29,9 @@ class player2(context: Context,) : View(context) {
     }
 
 
-    fun startGameP2() {
-        playerY = screenHeight - playerHeight // Position player at bottom of screen
+    // Position player at bottom of screen
+    fun P2Position() {
+        playerY = screenHeight - playerHeight
     }
 
 
@@ -42,10 +43,7 @@ class player2(context: Context,) : View(context) {
         playerHitbox.right = playerX + playerWidth
         playerHitbox.bottom = playerY + playerHeight
 
-        // Set the size of the player using the paint's stroke width
-
-
-        // Draw the player as a horizontal line on the canvas using the drawLine method
+        // Draw the player
         paint.color = Color.GREEN
         canvas.drawRect(playerX, playerY, playerX + playerWidth, playerY + playerHeight, paint)
     }

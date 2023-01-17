@@ -10,20 +10,16 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 
-class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceView(context),  SurfaceHolder.Callback, Runnable {
+class GameView(context: Context): SurfaceView(context),  SurfaceHolder.Callback, Runnable {
 
     private var thread : Thread? = null
     private var running = false
-    lateinit var canvas : Canvas
     private lateinit var ball1 : Ball
     private lateinit var player1 : player1
-
-    private lateinit var GameActivity : GameActivity
 
     private lateinit var PlayerBot : playerbot
 
     var mFPS: Long = 0
-
 
     private var bounds = Rect()
     var mHolder: SurfaceHolder? = holder
@@ -37,21 +33,19 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     }
 
     fun setup() {
+
         ball1 = Ball(context)
+        Game.ball1 = ball1
         player1 = player1(context)
         PlayerBot = playerbot(context)
         ball1.paint.color = Color.BLACK
-
-
     }
 
 
     fun start(){
-
         running = true
         thread = Thread(this)
         thread?.start()
-
     }
 
     fun stop(){
@@ -62,8 +56,6 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         }catch (e: InterruptedException) {
             e.printStackTrace()
         }
-
-
     }
 
     fun update(){
@@ -71,9 +63,7 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         ball1.updateScore()
         player1.update()
         PlayerBot.updateAIPlayer()
-        PlayerBot.startGame()
-
-
+        PlayerBot.PlayerBotPosition()
     }
 
     fun draw(){
@@ -86,25 +76,18 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
             player1.Draw(canvas)
             PlayerBot.Draw(canvas)
 
-
-            val paint = Paint()
-
-
             mHolder!!.unlockCanvasAndPost(canvas)
-
         }
     }
 
+    //if the ball touches the paddle it should bounce
     fun intersects(b1: Ball, b2: player1, b3:playerbot) {
         if (b1.ballHitbox.intersects(b2.playerHitbox.left, b2.playerHitbox.top, b2.playerHitbox.right, b2.playerHitbox.bottom )){
             bounceBall(b1,b2, b3)}
 
         else if (b1.ballHitbox.intersects(b3.playerHitbox.left, b3.playerHitbox.top, b3.playerHitbox.right, b3.playerHitbox.bottom )) {
-
             bounceBall(b1,b2, b3)}
-
         }
-
 
 
     fun bounceBall(b1: Ball, b2: player1, b3:playerbot ) {
@@ -121,18 +104,14 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
         // Get the touch coordinates
         val touchX = event!!.x.toInt()
 
-
         // Update the player position based on the touch coordinates
         player1.playerX = touchX - player1.playerWidth / 2
-
 
         // Redraw the view
         invalidate()
         return true
 
     }
-
-
 
 
     override fun surfaceCreated(holder: SurfaceHolder) {
@@ -150,12 +129,10 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
     }
 
 
-
     override fun run(){
         while (running){
             update()
             draw()
-
 
             player1.checkBounds(bounds)
             PlayerBot.checkBounds(bounds)
@@ -163,10 +140,8 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
 
             invalidate()
 
-
             // Capture the current time in milliseconds in startFrameTime
             val startFrameTime = System.currentTimeMillis()
-
 
             // Calculate FPS
             val timeThisFrame = System.currentTimeMillis() - startFrameTime
@@ -175,7 +150,5 @@ class GameView(context: Context, var mScreenX: Int, var mScreenY: Int): SurfaceV
             }
 
     }
-
-
 }
 }

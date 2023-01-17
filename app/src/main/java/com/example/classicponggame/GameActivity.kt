@@ -17,23 +17,15 @@ class GameActivity : AppCompatActivity() {
         SINGLE_PLAYER,
         MULTI_PLAYER
     }
-    var gameMode = GameMode.SINGLE_PLAYER
-
-    private lateinit var ball1 : Ball
-    private lateinit var player1 : player1
-    private lateinit var PlayerBot : playerbot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-
         //hide bar
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
 
         // Set up spinner
@@ -47,14 +39,15 @@ class GameActivity : AppCompatActivity() {
         playButton.setOnClickListener {
 
             val selectedGameMode = spinner.selectedItem.toString()
-            if (selectedGameMode == "Player 1") {
+            if (selectedGameMode == "Single Player") {
                 startInGameActivity(GameMode.SINGLE_PLAYER)
-            } else if (selectedGameMode == "Player 2") {
+            } else if (selectedGameMode == "Two Players") {
                 startInGameActivity(GameMode.MULTI_PLAYER)
             }
         }
 
-            // Start InGameActivity
+
+    // Start InGameActivity
     }
     private fun startInGameActivity(gameMode: GameMode) {
         val intent = Intent(this, InGameActivity::class.java)
