@@ -12,53 +12,51 @@ class player2(context: Context,) : View(context) {
     var speedX = 0f
     var speedY = 0f
 
-
     // Create a new Paint object for drawing the player
     val paint = Paint()
 
-
     // Variables for the player position and size
-     var playerX = 0f
-     var playerY = 0f
-     val playerWidth = 300f
-     val playerHeight = 70f
+     var playerX2 = 0f
+     var playerY2 = 0f
+     val playerWidth2 = 300f
+     val playerHeight2 = 70f
 
      val playerHitbox = RectF()
     fun updateP2(){
-        playerX += speedX
+        playerY2+= speedX
     }
 
 
     // Position player at bottom of screen
     fun P2Position() {
-        playerY = screenHeight - playerHeight
+        playerY2 = screenHeight - playerHeight2
     }
 
 
     fun DrawPlayer2(canvas: Canvas) {
 
         // Update player hitbox
-        playerHitbox.left = playerX
-        playerHitbox.top = playerY
-        playerHitbox.right = playerX + playerWidth
-        playerHitbox.bottom = playerY + playerHeight
+        playerHitbox.left = playerX2
+        playerHitbox.top = playerY2
+        playerHitbox.right = playerX2 + playerWidth2
+        playerHitbox.bottom = playerY2 + playerHeight2
 
         // Draw the player
         paint.color = Color.RED
-        canvas.drawRect(playerX, playerY, playerX + playerWidth, playerY + playerHeight, paint)
+        canvas.drawRect(playerX2, playerY2, playerX2 + playerWidth2, playerY2 + playerHeight2, paint)
     }
 
     fun checkBounds(bounds : Rect){
-        if (playerX-75 < bounds.left){
+        if (playerX2-75 < bounds.left){
             this.speedX *=-1
         }
-        if (playerX+75 > bounds.right){
+        if (playerX2+75 > bounds.right){
             this.speedX*= -1
         }
-        if (playerY-75 < bounds.top){
+        if (playerY2-75 < bounds.top){
             this.speedY *= -1
         }
-        if (playerY+75 > bounds.bottom){
+        if (playerY2+75 > bounds.bottom){
             this.speedY *= -1
         }
     }

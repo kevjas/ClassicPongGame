@@ -10,11 +10,11 @@ import android.view.SurfaceView
 
 class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback, Runnable {
 
-    private var thread : Thread? = null
+    private var thread: Thread? = null
     private var running = false
-    private lateinit var ball1 : Ball
-    private lateinit var player1 : player1
-    private lateinit var player2 : player2
+    private lateinit var ball1: Ball
+    private lateinit var player1: player1
+    private lateinit var player2: player2
 
 
     var mFPS: Long = 0
@@ -36,7 +36,7 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
         ball1.paint.color = Color.BLACK
     }
 
-    fun start(){
+    fun start() {
 
         running = true
         thread = Thread(this)
@@ -44,17 +44,17 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
 
     }
 
-    fun stop(){
+    fun stop() {
         running = false
-        try{
+        try {
             thread?.join()
 
-        }catch (e: InterruptedException) {
+        } catch (e: InterruptedException) {
             e.printStackTrace()
         }
     }
 
-    fun update(){
+    fun update() {
         ball1.update()
         ball1.updateScore()
         player1.update()
@@ -62,7 +62,7 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
         player2.P2Position()
     }
 
-    fun draw(){
+    fun draw() {
         val canvas = mHolder?.lockCanvas()
 
         canvas?.let {
@@ -76,18 +76,30 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
     }
 
     //if the ball touches the paddle it should bounce
-    fun intersects(b1: Ball, b2: player1, b4:player2) {
-        if (b1.ballHitbox.intersects(b2.playerHitbox.left, b2.playerHitbox.top, b2.playerHitbox.right, b2.playerHitbox.bottom )){
-            bounceBall(b1,b2, b4)}
-
-            else if (b1.ballHitbox.intersects(b4.playerHitbox.left, b4.playerHitbox.top, b4.playerHitbox.right, b4.playerHitbox.bottom )) {
-            bounceBall(b1,b2,b4)}
+    fun intersects(b1: Ball, b2: player1, b4: player2) {
+        if (b1.ballHitbox.intersects(
+                b2.playerHitbox.left,
+                b2.playerHitbox.top,
+                b2.playerHitbox.right,
+                b2.playerHitbox.bottom
+            )
+        ) {
+            bounceBall(b1, b2, b4)
+        } else if (b1.ballHitbox.intersects(
+                b4.playerHitbox.left,
+                b4.playerHitbox.top,
+                b4.playerHitbox.right,
+                b4.playerHitbox.bottom
+            )
+        ) {
+            bounceBall(b1, b2, b4)
         }
+    }
 
-    fun bounceBall(b1: Ball, b2: player1, b4: player2 ) {
-        b1.speedY*= -1
-        b2.speedY*= -1
-        b4.speedY*= -1
+    fun bounceBall(b1: Ball, b2: player1, b4: player2) {
+        b1.speedY *= -1
+        b2.speedY *= -1
+        b4.speedY *= -1
 
         ball1.paint.color = Color.WHITE
     }
@@ -97,33 +109,46 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
 
         when (event?.actionMasked) {
             MotionEvent.ACTION_MOVE -> {
-                // get the x and y coordinates of the touch event
-                val touchX = event!!.x.toInt()
 
+                val touchX = event.x.toInt()
+
+                if (event.y > bounds.exactCenterY()) {
+                    player2.playerX2 = touchX - player2.playerWidth2 / 2
+
+                } else {
+                    player1.playerX = touchX - player1.playerWidth / 2
+                }
+                return true
+
+                // get the x and y coordinates of the touch event
                 // Update the player position
-                player1.playerX = touchX - player1.playerWidth / 2
-                player2.playerX = touchX - player2.playerWidth / 2
+
+               // player1.playerX = touchX - player1.playerWidth / 2
+               // player2.playerX2 = touchX - player2.playerWidth2 / 2
             }
         }
-        // Redraw the view
-        invalidate()
-        return true
-    }
 
-    override fun surfaceCreated(holder: SurfaceHolder) {
-        start()
-    }
+            // Redraw the view
+            invalidate()
+            return true
+        }
+
+
+
+        override fun surfaceCreated(holder: SurfaceHolder) {
+            start()
+        }
+
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
 
-        bounds = Rect(0,0,width,height)
+        bounds = Rect(0, 0, width, height)
         start()
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
         stop()
     }
-
     override fun run(){
         while (running){
             update()
