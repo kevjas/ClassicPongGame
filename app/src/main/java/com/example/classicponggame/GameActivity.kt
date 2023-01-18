@@ -27,9 +27,10 @@ class GameActivity : AppCompatActivity() {
 
         // Set up spinner
         val spinner = findViewById<Spinner>(R.id.game_mode_spinner)
-        val adapter = ArrayAdapter.createFromResource(this, R.array.game_modes, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.game_modes, R.layout.spinner_item_layout)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
+
 
         // Set up play button
         val playButton = findViewById<Button>(R.id.Button)
