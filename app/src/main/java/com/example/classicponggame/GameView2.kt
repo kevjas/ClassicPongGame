@@ -106,32 +106,24 @@ class GameView2(context: Context): SurfaceView(context),  SurfaceHolder.Callback
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
         when (event?.actionMasked) {
             MotionEvent.ACTION_MOVE -> {
-
-                val touchX = event.x.toInt()
-
-                if (event.y > bounds.exactCenterY()) {
-                    player2.playerX2 = touchX - player2.playerWidth2 / 2
-
-                } else {
-                    player1.playerX = touchX - player1.playerWidth / 2
+                // loop through all the touch events
+                for (i in 0 until event.pointerCount) {
+                    val touchX = event.getX(i).toInt()
+                    val touchY = event.getY(i).toInt()
+                    if (touchY > bounds.exactCenterY()) {
+                        player2.playerX2 = touchX - player2.playerWidth2 / 2
+                    } else {
+                        player1.playerX = touchX - player1.playerWidth / 2
+                    }
                 }
-                return true
-
-                // get the x and y coordinates of the touch event
-                // Update the player position
-
-               // player1.playerX = touchX - player1.playerWidth / 2
-               // player2.playerX2 = touchX - player2.playerWidth2 / 2
             }
         }
-
-            // Redraw the view
-            invalidate()
-            return true
-        }
+        // Redraw the view
+        invalidate()
+        return true
+    }
 
 
 
